@@ -7,18 +7,18 @@ public class baseballGame{
     public static void main(String[]args) throws IOException {
         Random rd = new Random();
 
-        HashMap<String,String> baseballNumberSpace = new HashMap<>();
+        HashMap<Integer,Integer> baseballNumberSpace = new HashMap<>();
 
         for (int i = 1; i < 4; i++){
-            String randomNumber = Integer.toString(rd.nextInt(9) + 1);
+            Integer randomNumber = rd.nextInt(9) + 1;
             if (baseballNumberSpace.containsKey(randomNumber)){
                 i--;
                 continue;
             }
-            baseballNumberSpace.put(randomNumber,Integer.toString(i));
+            baseballNumberSpace.put(randomNumber,i);
         }
 
-        for (Map.Entry<String, String> entrySet : baseballNumberSpace.entrySet()){
+        for (Map.Entry<Integer, Integer> entrySet : baseballNumberSpace.entrySet()){
             System.out.println(entrySet.getKey() +" " + entrySet.getValue() );
         }
 
@@ -62,24 +62,24 @@ public class baseballGame{
             int strike = 0;
             int ball = 0;
 
-            if (baseballNumberSpace.get(String.valueOf(str.charAt(0))) != null) {
-                if (baseballNumberSpace.get(String.valueOf(str.charAt(0))).equals("1")) {
+            if (baseballNumberSpace.get(Character.getNumericValue(str.charAt(0))) != null) {
+                if (baseballNumberSpace.get(Character.getNumericValue(str.charAt(0))).equals(1)) {
                     strike = strike + 1;
                 } else {
                     ball = ball + 1;
                 }
             }
 
-            if (baseballNumberSpace.get(String.valueOf(str.charAt(1))) != null) {
-                if (baseballNumberSpace.get(String.valueOf(str.charAt(1))).equals("2")) {
+            if (baseballNumberSpace.get(Character.getNumericValue(str.charAt(1))) != null) {
+                if (baseballNumberSpace.get(Character.getNumericValue(str.charAt(1))).equals(2)) {
                     strike = strike + 1;
                 } else {
                     ball = ball + 1;
                 }
             }
 
-            if (baseballNumberSpace.get(String.valueOf(str.charAt(2))) != null) {
-                if (baseballNumberSpace.get(String.valueOf(str.charAt(2))).equals("3")) {
+            if (baseballNumberSpace.get(Character.getNumericValue(str.charAt(2))) != null) {
+                if (baseballNumberSpace.get(Character.getNumericValue(str.charAt(2))).equals(3)) {
                     strike = strike + 1;
                 } else {
                     ball = ball + 1;
