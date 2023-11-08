@@ -5,7 +5,7 @@ import java.util.Set;
 
 public class ValidationInput {
 
-    public boolean isValidationAll(String input){
+    public boolean isValidationUserNumber(String input){
         if (!isEmpty(input) || !isValidationLength(input) || !isContainsZero(input) || !isDuplicate(input)){
             return false;
         }

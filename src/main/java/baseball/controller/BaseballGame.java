@@ -1,96 +1,37 @@
 package baseball.controller;
 
-import baseball.model.ComputerNumber;
-import global.ValidationInput;
-import view.InputView;
-
+import baseball.model.Computer;
 import java.io.IOException;
 import java.util.HashMap;
+import view.InputView;
 
 public class BaseballGame {
+
     private final InputView inputView;
-    private final ValidationInput validationInput;
+    private Computer computer;
 
     public BaseballGame() {
         this.inputView = new InputView();
-        this.validationInput = new ValidationInput();
+        this.computer = new Computer();
     }
 
     public void play() throws IOException {
 
-
         while (true) {
-            ComputerNumber computerNumber = new ComputerNumber();
-            HashMap<Integer, Integer> answer = computerNumber.getAnswer();
+            HashMap<Integer, Integer> answer = computer.getAnswer();
 
             while (true) {
-                String userNumber = validationNumber();
-                if (!validationStrikeAndBall(answer, userNumber)) {
+                String userNumber = inputView.validationNumber();
+                computer.test();
+                if (!computer.validationStrikeAndBall(answer, userNumber)) {
                     break;
                 }
-
             }
 
             if (inputView.isExit()) {
                 return;
             }
+            computer = computer.newGame();
         }
     }
-
-    public String validationNumber() throws IOException {
-        String input;
-
-        do {
-            input = inputView.getUserNumber();
-        } while (!validationInput.isValidationAll(input));
-
-        return input;
-    }
-
-    public boolean validationStrikeAndBall(HashMap<Integer, Integer> answer, String userNumber) {
-        int strike = 0;
-        int ball = 0;
-
-        for (int i = 0; i < userNumber.length(); i++) {
-            int digit = Character.getNumericValue(userNumber.charAt(i));
-            Integer answerValue = answer.get(digit);
-
-            if (answerValue != null) {
-                if (answerValue.equals(i + 1)) {
-                    strike++;
-                } else {
-                    ball++;
-                }
-            }
-        }
-
-        if (strike == 3) {
-            System.out.println("정답입니다.");
-            return false;
-        }
-
-        if (strike == 0 && ball == 0) {
-            System.out.println("낫씽");
-            return true;
-        }
-
-        if (strike > 0 && ball == 0) {
-            System.out.printf("%s 스트라이크%s", strike, System.lineSeparator());
-            return true;
-        }
-
-        if (strike == 0 && ball > 0) {
-            System.out.printf("%s 볼%s", ball, System.lineSeparator());
-            return true;
-        }
-
-        if (strike > 0 && ball > 0) {
-            System.out.printf("%s 스트라이크, %s 볼%s", strike, ball, System.lineSeparator());
-            return true;
-        }
-        return true;
-    }
-
-
-
 }
