@@ -4,9 +4,7 @@ import java.util.HashMap;
 import java.util.Random;
 
 public class ComputerNumber {
-    private HashMap<Integer,Integer> answer;
-    private final int START_NUMBER = 1;
-    private final int END_NUMBER = 3;
+    private final HashMap<Integer,Integer> answer;
     Random random = new Random();
 
     public ComputerNumber() {
@@ -19,6 +17,9 @@ public class ComputerNumber {
 
     public HashMap<Integer, Integer> getComputerNumber() {
         HashMap<Integer,Integer> answer = new HashMap<>();
+
+        int START_NUMBER = 1;
+        int END_NUMBER = 3;
 
         for (int i = START_NUMBER; i <= END_NUMBER; i++){
             int randomNumber = getRandomNumber();

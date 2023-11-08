@@ -8,77 +8,89 @@ import java.io.IOException;
 import java.util.HashMap;
 
 public class BaseballGame {
-    private InputView inputView;
-    private ValidationInput validationInput;
-    private ComputerNumber computerNumber;
+    private final InputView inputView;
+    private final ValidationInput validationInput;
 
     public BaseballGame() {
         this.inputView = new InputView();
         this.validationInput = new ValidationInput();
-        this.computerNumber = new ComputerNumber();
     }
 
     public void play() throws IOException {
-        HashMap<Integer, Integer> answer = computerNumber.getAnswer();
-        String userNumber = validationNumber();
 
-        int strike = 0;
-        int ball = 0;
 
-        if (answer.get(Character.getNumericValue(userNumber.charAt(0))) != null) {
-            if (answer.get(Character.getNumericValue(userNumber.charAt(0))).equals(1)) {
-                strike = strike + 1;
-            } else {
-                ball = ball + 1;
+        while (true) {
+            ComputerNumber computerNumber = new ComputerNumber();
+            HashMap<Integer, Integer> answer = computerNumber.getAnswer();
+
+            while (true) {
+                String userNumber = validationNumber();
+                if (!validationStrikeAndBall(answer, userNumber)) {
+                    break;
+                }
+
             }
-        }
 
-        if (answer.get(Character.getNumericValue(userNumber.charAt(1))) != null) {
-            if (answer.get(Character.getNumericValue(userNumber.charAt(1))).equals(2)) {
-                strike = strike + 1;
-            } else {
-                ball = ball + 1;
+            if (inputView.isExit()) {
+                return;
             }
-        }
-
-        if (answer.get(Character.getNumericValue(userNumber.charAt(2))) != null) {
-            if (answer.get(Character.getNumericValue(userNumber.charAt(2))).equals(3)) {
-                strike = strike + 1;
-            } else {
-                ball = ball + 1;
-            }
-        }
-
-        if (strike == 3) {
-            System.out.println("정답입니다.");
-        }
-
-        if (strike == 0 && ball == 0) {
-            System.out.println("낫씽");
-        }
-
-        if (strike > 0 && ball == 0) {
-            System.out.printf("%s 스트라이크%s", strike, System.lineSeparator());
-        }
-
-        if (strike == 0 && ball > 0) {
-            System.out.printf("%s 볼%s", ball, System.lineSeparator());
-        }
-
-        if (strike > 0 && ball > 0) {
-            System.out.printf("%s 스트라이크, %s 볼%s", strike, ball, System.lineSeparator());
         }
     }
 
     public String validationNumber() throws IOException {
         String input;
-        while (true) {
-            input = inputView.getInput();
-            if (validationInput.isValidationAll(input)){
-                break;
-            }
-        }
+
+        do {
+            input = inputView.getUserNumber();
+        } while (!validationInput.isValidationAll(input));
+
         return input;
     }
+
+    public boolean validationStrikeAndBall(HashMap<Integer, Integer> answer, String userNumber) {
+        int strike = 0;
+        int ball = 0;
+
+        for (int i = 0; i < userNumber.length(); i++) {
+            int digit = Character.getNumericValue(userNumber.charAt(i));
+            Integer answerValue = answer.get(digit);
+
+            if (answerValue != null) {
+                if (answerValue.equals(i + 1)) {
+                    strike++;
+                } else {
+                    ball++;
+                }
+            }
+        }
+
+        if (strike == 3) {
+            System.out.println("정답입니다.");
+            return false;
+        }
+
+        if (strike == 0 && ball == 0) {
+            System.out.println("낫씽");
+            return true;
+        }
+
+        if (strike > 0 && ball == 0) {
+            System.out.printf("%s 스트라이크%s", strike, System.lineSeparator());
+            return true;
+        }
+
+        if (strike == 0 && ball > 0) {
+            System.out.printf("%s 볼%s", ball, System.lineSeparator());
+            return true;
+        }
+
+        if (strike > 0 && ball > 0) {
+            System.out.printf("%s 스트라이크, %s 볼%s", strike, ball, System.lineSeparator());
+            return true;
+        }
+        return true;
+    }
+
+
 
 }
