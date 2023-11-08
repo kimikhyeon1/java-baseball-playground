@@ -1,13 +1,11 @@
 package baseball.model;
 
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 
 public class Computer {
 
     private final HashMap<Integer, Integer> answer;
-    Random random = new Random();
 
     public Computer() {
         this.answer = getComputerNumber();
@@ -33,7 +31,7 @@ public class Computer {
         return answer;
     }
 
-    public boolean validationStrikeAndBall(HashMap<Integer, Integer> answer, String userNumber) {
+    public int[] calculationStrikeAndBall(HashMap<Integer, Integer> answer, String userNumber) {
         int strike = 0;
         int ball = 0;
 
@@ -49,46 +47,44 @@ public class Computer {
                 }
             }
         }
+        return new int[]{strike, ball};
+    }
+
+    public boolean validationStrikeAndBall(HashMap<Integer, Integer> answer, String userNumber) {
+        int[] strikeAndBall = calculationStrikeAndBall(answer, userNumber);
+        int strike = strikeAndBall[0];
+        int ball = strikeAndBall[1];
 
         if (strike == 3) {
             System.out.println("정답입니다.");
-            return false;
         }
 
         if (strike == 0 && ball == 0) {
             System.out.println("낫씽");
-            return true;
         }
 
         if (strike > 0 && ball == 0) {
             System.out.printf("%s 스트라이크%s", strike, System.lineSeparator());
-            return true;
         }
 
         if (strike == 0 && ball > 0) {
             System.out.printf("%s 볼%s", ball, System.lineSeparator());
-            return true;
         }
 
         if (strike > 0 && ball > 0) {
             System.out.printf("%s 스트라이크, %s 볼%s", strike, ball, System.lineSeparator());
-            return true;
         }
-        return true;
+
+        return strike == 3;
     }
 
     public int getRandomNumber() {
+        Random random = new Random();
         return random.nextInt(9) + 1;
     }
 
     public HashMap<Integer, Integer> getAnswer() {
         return answer;
     }
-
-    public void test() {
-        for (Map.Entry<Integer, Integer> entrySet : answer.entrySet()) {
-            System.out.println(entrySet.getKey() + " " + entrySet.getValue());
-        }
-
-    }
 }
+
