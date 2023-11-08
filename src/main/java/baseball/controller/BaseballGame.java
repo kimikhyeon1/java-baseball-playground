@@ -22,8 +22,7 @@ public class BaseballGame {
 
             while (true) {
                 String userNumber = inputView.validationNumber();
-                computer.test();
-                if (!computer.validationStrikeAndBall(answer, userNumber)) {
+                if (computer.validationStrikeAndBall(answer, userNumber)) {
                     break;
                 }
             }

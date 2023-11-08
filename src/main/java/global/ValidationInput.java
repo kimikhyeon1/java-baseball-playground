@@ -5,21 +5,23 @@ import java.util.Set;
 
 public class ValidationInput {
 
-    public boolean isValidationUserNumber(String input){
-        if (!isEmpty(input) || !isValidationLength(input) || !isContainsZero(input) || !isDuplicate(input)){
-            return false;
-        }
-        return true;
-    }
-    public boolean isEmpty(String input) {
-        if (input.isEmpty() || input.contains(" ")) {
-            System.out.println("공백을 입력하셨습니다.");
+    public boolean isValidationUserNumber(String input) {
+        if (!isEmpty(input) || !isValidationLength(input) || !isContainsZero(input) || !isDuplicate(
+            input)) {
             return false;
         }
         return true;
     }
 
-    public boolean isValidationLength(String input){
+    public boolean isEmpty(String input) {
+        if (input.isEmpty() || input.contains(" ")) {
+            System.out.println("공백을 입력하였습니다.");
+            return false;
+        }
+        return true;
+    }
+
+    public boolean isValidationLength(String input) {
         if (input.length() != 3) {
             System.out.println("3자리를 입력해 주세요.");
             return false;
@@ -27,7 +29,7 @@ public class ValidationInput {
         return true;
     }
 
-    public boolean isContainsZero(String input){
+    public boolean isContainsZero(String input) {
         if (input.contains("0")) {
             System.out.println("1~9를 입력해 주세요.");
             return false;
